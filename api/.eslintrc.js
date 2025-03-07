@@ -1,5 +1,6 @@
 // @ts-check
 import eslint from '@eslint/js';
+import parser from '@typescript-eslint/parser';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -19,6 +20,7 @@ export default tseslint.config(
       },
       ecmaVersion: 5,
       sourceType: 'module',
+      parser: parser,
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
