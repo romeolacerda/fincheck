@@ -7,11 +7,13 @@ import { AuthService } from './auth.service';
 @Module({
   imports: [
     JwtModule.register({
+      global: true, 
       signOptions: { expiresIn: '7d' },
       secret: env.jwtSecret,
-    }),
+    })
   ],
   controllers: [AuthController],
   providers: [AuthService],
+  exports: []
 })
 export class AuthModule {}
