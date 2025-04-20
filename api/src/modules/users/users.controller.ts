@@ -7,8 +7,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get('/me')
-    me(@ActiveUserId() userId: string){ 
-    return this.usersService.getUserById(userId)
+  me(@ActiveUserId() userId: string) {
+    return this.usersService.getUserById(userId);
   }
-  
 }

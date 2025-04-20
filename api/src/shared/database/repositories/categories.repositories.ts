@@ -1,17 +1,16 @@
-import { Injectable } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
-import { PrismaService } from "../prisma.service";
+import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import { PrismaService } from '../prisma.service';
 
 @Injectable()
-export class CategoiresRepository{
+export class CategoiresRepository {
+  constructor(private readonly prismaService: PrismaService) {}
 
-  constructor( private readonly prismaService: PrismaService) {}
-
-  findMany(findManyDto: Prisma.CategoryFindManyArgs){
-    return this.prismaService.category.findMany(findManyDto)
+  findMany(findManyDto: Prisma.CategoryFindManyArgs) {
+    return this.prismaService.category.findMany(findManyDto);
   }
 
-  findFirst(findFirstDto: Prisma.CategoryFindFirstArgs){
-    return this.prismaService.category.findFirst(findFirstDto)
+  findFirst(findFirstDto: Prisma.CategoryFindFirstArgs) {
+    return this.prismaService.category.findFirst(findFirstDto);
   }
 }

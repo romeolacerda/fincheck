@@ -7,10 +7,9 @@ export class CategoriesService {
 
   findAllByUserId(userId: string) {
     return this.categoriesRepo.findMany({
-      where : {
-        userId: userId
-      }
-    })
+      where: {
+        userId: userId,
+      },
+    });
   }
-
 }

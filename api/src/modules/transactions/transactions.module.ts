@@ -6,7 +6,7 @@ import { ValidateTransactionOwnershipService } from './services/validate-transac
 import { TransactionsController } from './transactions.controller';
 
 @Module({
-  imports: [BankAccountsModule, CategoriesModule, ],
+  imports: [BankAccountsModule, CategoriesModule],
   controllers: [TransactionsController],
   providers: [TransactionsService, ValidateTransactionOwnershipService],
 })

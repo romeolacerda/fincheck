@@ -7,7 +7,18 @@ import { TransactionsRepository } from './repositories/transactions.repositories
 
 @Global()
 @Module({
-  providers: [PrismaService, UsersRepository, CategoiresRepository, BankAccountsRepository, TransactionsRepository],
-  exports: [UsersRepository, CategoiresRepository, BankAccountsRepository, TransactionsRepository]
+  providers: [
+    PrismaService,
+    UsersRepository,
+    CategoiresRepository,
+    BankAccountsRepository,
+    TransactionsRepository,
+  ],
+  exports: [
+    UsersRepository,
+    CategoiresRepository,
+    BankAccountsRepository,
+    TransactionsRepository,
+  ],
 })
 export class DatabaseModule {}

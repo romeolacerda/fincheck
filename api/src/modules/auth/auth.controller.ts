@@ -10,11 +10,10 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('signin')
-  authenticate(@Body() SinginDto: SinginDto){
+  authenticate(@Body() SinginDto: SinginDto) {
     return this.authService.singin(SinginDto);
   }
 
- 
   @Post('signup')
   singup(@Body() SignupDto: SignupDto) {
     return this.authService.singUp(SignupDto);

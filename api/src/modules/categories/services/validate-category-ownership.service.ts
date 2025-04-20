@@ -4,15 +4,15 @@ import { CategoiresRepository } from 'src/shared/database/repositories/categorie
 
 @Injectable()
 export class ValidateCategoryOwnershipService {
-  constructor (private readonly categoriesRepo: CategoiresRepository) {}
+  constructor(private readonly categoriesRepo: CategoiresRepository) {}
 
-   async validate(userId: string, categoryId: string){
+  async validate(userId: string, categoryId: string) {
     const isOwner = await this.categoriesRepo.findFirst({
-      where: {userId, id: categoryId}
-    })
+      where: { userId, id: categoryId },
+    });
 
-    if(!isOwner){
-      throw new NotFoundException('Category not found')
+    if (!isOwner) {
+      throw new NotFoundException('Category not found');
     }
   }
 }
