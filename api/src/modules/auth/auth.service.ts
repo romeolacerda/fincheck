@@ -6,6 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcryptjs';
 import { UsersRepository } from 'src/shared/database/repositories/users.repositories';
+import { UsersRoles } from '../users/entities/Users';
 import { SinginDto } from './dtos/signin.dto';
 import { SignupDto } from './dtos/singup.dto';
 
@@ -34,7 +35,7 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials.');
     }
 
-    const accessToken = await this.generateAccessToken(user.id);
+    const accessToken = await this.generateAccessToken(user.id, user.role);
 
     return { accessToken };
   }
@@ -58,6 +59,7 @@ export class AuthService {
         name,
         email,
         password: hashedPassword,
+        role: UsersRoles.USER,
         categories: {
           createMany: {
             data: [
@@ -79,12 +81,12 @@ export class AuthService {
       },
     });
 
-    const accessToken = await this.generateAccessToken(user.id);
+    const accessToken = await this.generateAccessToken(user.id, user.role);
 
     return { accessToken };
   }
 
-  private generateAccessToken(userId: string) {
-    return this.jwtService.signAsync({ sub: userId });
+  private generateAccessToken(userId: string, role: string) {
+    return this.jwtService.signAsync({ sub: userId, role});
   }
 }
