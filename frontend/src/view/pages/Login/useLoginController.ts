@@ -1,6 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { httpClient } from "../../../app/services/httpClient";
 
 const shcema = z.object({
     email: z.string().nonempty('Email Obrigatorio').email('Informe um email valido'),
@@ -8,19 +9,19 @@ const shcema = z.object({
 })
 type FormData = z.infer<typeof shcema>
 
-export function useLoginController(){
+export function useLoginController() {
     const {
         register,
         handleSubmit: hookFormHandleSubmit,
-        formState: {errors}
+        formState: { errors }
     } = useForm<FormData>({
         resolver: zodResolver(shcema)
     })
 
-    const handleSubmit = hookFormHandleSubmit((data) => {
-        console.log(data)
+    const handleSubmit = hookFormHandleSubmit(async (data) => {
+        await httpClient.post('/auth/singin', data)
     })
 
-    return {handleSubmit, register, errors}
+    return { handleSubmit, register, errors }
 
 }
