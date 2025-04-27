@@ -5,6 +5,7 @@ import toast from "react-hot-toast"
 import { z } from "zod"
 import { authService } from "../../../app/services/authService"
 import { SignupParams } from "../../../app/services/authService/signup"
+import { useAuth } from "../../../app/hooks/useAuth"
 
 const schema = z.object({
     name: z.string().nonempty('Name is required'),
@@ -26,9 +27,13 @@ export function useRegisterController() {
         mutationFn: async (data: SignupParams) => { return authService.signup(data) },
     })
 
+    const { signin } = useAuth()
+
     const handleSubmit = hookFormSubmit(async (data) => {
         try {
-            await mutateAsync(data)
+            const {accessToken} = await mutateAsync(data)
+
+            signin(accessToken)
         } catch {
             toast.error("There was an error when creating your account")
         }

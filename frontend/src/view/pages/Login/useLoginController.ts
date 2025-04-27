@@ -1,10 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
-import { SigninParams } from "../../../app/services/authService/signin";
-import { authService } from "../../../app/services/authService";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { z } from "zod";
+import { useAuth } from "../../../app/hooks/useAuth";
+import { authService } from "../../../app/services/authService";
+import { SigninParams } from "../../../app/services/authService/signin";
 
 const schema = z.object({
     email: z.string().nonempty('Email Obrigatorio').email('Informe um email valido'),
@@ -25,9 +26,13 @@ export function useLoginController() {
         mutationFn: async (data: SigninParams) => { return authService.signin(data) },
     })
 
+    const {signin } = useAuth()
+
     const handleSubmit = hookFormSubmit(async (data) => {
         try {
-            await mutateAsync(data)
+            const {accessToken} = await mutateAsync(data)
+
+            signin(accessToken)
         } catch {
             toast.error("There was an error when login in into your account")
         }
