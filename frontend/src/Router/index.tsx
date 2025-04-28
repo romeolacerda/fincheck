@@ -26,9 +26,7 @@ export default function Router() {
                     <Route
                         path="/"
                         element={
-                            <h1>
                                 <Dashboard />
-                            </h1>
                         }
                     />
                 </Route>
