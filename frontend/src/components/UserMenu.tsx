@@ -15,7 +15,7 @@ export default function UserMenu() {
                     </span>
                 </div>
             </DropdownMenu.Trigger>
-            <DropdownMenu.Content className="w-32">
+            <DropdownMenu.Content side="bottom" className="w-32">
                 <DropdownMenu.Item className="flex items-center justify-between" onSelect={signout}>
                     Sair
                     <ExitIcon className="w-4 h-4" />
