@@ -37,7 +37,8 @@ export class TransactionsService {
 
   findAllByUserId(userId: string, filters: { month: number, year: number, bankAccountId?: string, type?: TransactionType}) {
     return this.transactionsRepo.findMany({
-      where: { userId,
+      where: { 
+        userId,
         bankAccountId: filters.bankAccountId,
         type: filters.type,
         date: {

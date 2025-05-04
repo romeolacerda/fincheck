@@ -12,6 +12,7 @@ const schema = z.object({
     email: z.string().nonempty('Email is requires').email('Use a valid email'),
     password: z.string().nonempty('Password is required').min(8, 'Password must have at least 8 characters')
 })
+
 type FormData = z.infer<typeof schema>
 
 export function useRegisterController() {

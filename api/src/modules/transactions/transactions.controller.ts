@@ -36,7 +36,7 @@ export class TransactionsController {
   findAll(
     @ActiveUserId() userId: string,
     @Query('month', ParseIntPipe) month: number,
-    @Query('month', ParseIntPipe) year: number , 
+    @Query('year', ParseIntPipe) year: number , 
     @Query('bankAccountId', OptionalParseUUIDPipe) bankAccountId: string,
     @Query('type', new OptionalParseEnumPipe(TransactionType)) type: TransactionType)
    {
