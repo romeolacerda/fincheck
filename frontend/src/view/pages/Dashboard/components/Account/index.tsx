@@ -11,7 +11,7 @@ import { useAccountController } from "./useAccountController";
 
 export default function Accounts() {
 
-    const { setSliderState, sliderState, windowWidth, areValuesVisible, toggleValuesVisibility, isLoading, accounts } = useAccountController()
+    const { setSliderState, sliderState, windowWidth, areValuesVisible, toggleValuesVisibility, isLoading, accounts, openNewAccountModal } = useAccountController()
 
     return (
         <div className="bg-teal-900 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col text">
@@ -49,7 +49,7 @@ export default function Accounts() {
                                     </strong>
 
                                 </div>
-                                <button className="mt-4 h-52 border-2 border-dashed border-teal-600 flex flex-col items-center justify-center gap-4 text-white">
+                                <button onClick={openNewAccountModal} className="mt-4 h-52 border-2 border-dashed border-teal-600 flex flex-col items-center justify-center gap-4 text-white">
                                     <div className="w-11 h-11 rounded-full  border-2 border-dashed border-white flex items-center justify-center">
                                         <PlusIcon className="w-6 h-6"/>
                                     </div>
