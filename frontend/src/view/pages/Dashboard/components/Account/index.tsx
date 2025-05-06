@@ -11,7 +11,7 @@ import { useAccountController } from "./useAccountController";
 
 export default function Accounts() {
 
-    const { setSliderState, sliderState, windowWidth, areValuesVisible, toggleValuesVisibility, isLoading, accounts, openNewAccountModal } = useAccountController()
+    const { setSliderState, sliderState, windowWidth, areValuesVisible, toggleValuesVisibility, isLoading, accounts, openNewAccountModal, currentBalance } = useAccountController()
 
     return (
         <div className="bg-teal-900 rounded-2xl w-full h-full px-4 py-8 md:p-10 flex flex-col text">
@@ -29,7 +29,7 @@ export default function Accounts() {
                         </span>
                         <div className="flex items-center gap-2">
                             <strong className={cn("text-2xl tracking-[-0.5px] text-white", !areValuesVisible && 'blur-sm')}>
-                                {formatCurrency(1000)}
+                                {formatCurrency(currentBalance)}
                             </strong>
                             <button className="flex items-center justify-center w-8 h-8" onClick={toggleValuesVisibility}>
                                 <EyeIcon open={!areValuesVisible} />
@@ -51,7 +51,7 @@ export default function Accounts() {
                                 </div>
                                 <button onClick={openNewAccountModal} className="mt-4 h-52 border-2 border-dashed border-teal-600 flex flex-col items-center justify-center gap-4 text-white">
                                     <div className="w-11 h-11 rounded-full  border-2 border-dashed border-white flex items-center justify-center">
-                                        <PlusIcon className="w-6 h-6"/>
+                                        <PlusIcon className="w-6 h-6" />
                                     </div>
                                     <span className="tracking-[-0.5px] font-medium block w-[128px] text-center">Cadastre uma nova conta</span>
                                 </button>
@@ -76,30 +76,14 @@ export default function Accounts() {
 
                                         <AccountsSliderNavigation isBeginning={sliderState.isBeginning} isEnd={sliderState.isEnd} />
                                     </div>
-                                    <SwiperSlide>
-                                        <AccountCard
-                                            balance={100}
-                                            color="#7950F2"
-                                            name="Nubank"
-                                            type="INVESTMENT"
-                                        />
-                                    </SwiperSlide>
-                                    <SwiperSlide>
-                                        <AccountCard
-                                            balance={100}
-                                            color="#7950F2"
-                                            name="Nubank"
-                                            type="INVESTMENT"
-                                        />
-                                    </SwiperSlide>
-                                    <SwiperSlide>
-                                        <AccountCard
-                                            balance={100}
-                                            color="#7950F2"
-                                            name="Nubank"
-                                            type="INVESTMENT"
-                                        />
-                                    </SwiperSlide>
+
+                                    {accounts.map(account => (
+                                        <SwiperSlide key={account.id}>
+                                            <AccountCard
+                                                data={account}
+                                            />
+                                        </SwiperSlide>
+                                    ))}
                                 </Swiper>
                             </div>
                         )}

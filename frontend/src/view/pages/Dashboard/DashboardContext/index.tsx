@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useState } from "react";
+import { BankAccount } from "../../../../app/entities/BankAccount";
 
 interface DashboardContextValue {
     areValuesVisible: boolean
@@ -10,6 +11,10 @@ interface DashboardContextValue {
     openNewTransactionModal(type: 'INCOME' | 'EXPENSE'): void
     closeNewTransactionModal(): void
     newTransactionType: 'INCOME' | 'EXPENSE' | null
+    openEditAccountModal(bankAccount: BankAccount): void
+    closeEditAccountModal(): void
+    isEditAccountModalOpen: boolean
+    accountBeingEdited: BankAccount | null
 }
 
 export const DashboardContext = createContext({} as DashboardContextValue)
@@ -19,6 +24,8 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
     const [isNewAccountModalOpen, setNewAccountModalOpen] = useState(false)
     const [isNewTransactionModalOpen, setNewTransactionModalOpen] = useState(false)
     const [newTransactionType, setNewTransactionType] = useState<'INCOME' | 'EXPENSE' | null>(null)
+    const [isEditAccountModalOpen, setEditAccountModalOpen] = useState(false)
+    const [accountBeingEdited, setAccountBeingEdited] = useState<BankAccount | null>(null)
 
     const toggleValuesVisibility = useCallback(() => {
         setAreValuesVisible(prevState => !prevState)
@@ -42,8 +49,18 @@ export function DashboardProvider({ children }: { children: React.ReactNode }) {
         setNewTransactionModalOpen(false)
     }, [])
 
+    const openEditAccountModal = useCallback((bankAccount: BankAccount) => {
+        setAccountBeingEdited(bankAccount)
+        setEditAccountModalOpen(true)
+    }, [])
+
+    const closeEditAccountModal = useCallback(() => {
+        setAccountBeingEdited(null)
+        setEditAccountModalOpen(false)
+    }, [])
+
     return (
-        <DashboardContext.Provider value={{ areValuesVisible, toggleValuesVisibility, openNewAccountModal, closeNewAccountModal, isNewAccountModalOpen, openNewTransactionModal, closeNewTransactionModal, isNewTransactionModalOpen, newTransactionType }}>
+        <DashboardContext.Provider value={{ areValuesVisible, toggleValuesVisibility, openNewAccountModal, closeNewAccountModal, isNewAccountModalOpen, openNewTransactionModal, closeNewTransactionModal, isNewTransactionModalOpen, newTransactionType, closeEditAccountModal, openEditAccountModal, isEditAccountModalOpen, accountBeingEdited }}>
             {children}
         </DashboardContext.Provider>
     )

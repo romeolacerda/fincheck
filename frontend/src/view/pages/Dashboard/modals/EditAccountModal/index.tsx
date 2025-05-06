@@ -5,13 +5,13 @@ import { Input } from "../../../../../components/Input";
 import { InputCurrency } from "../../../../../components/InputCurrency";
 import { Modal } from "../../../../../components/Modal";
 import { Select } from "../../../../../components/Select";
-import useNewAccountModalController from "./useNewAccountModalController";
+import useEditAccountModalController from "./useEditAccountModalController";
 
-export function NewAccountModal() {
-    const { closeNewAccountModal, isNewAccountModalOpen, errors, handleSubmit, register, control } = useNewAccountModalController()
+export function EditAccountModal() {
+    const { isEditAccountModalOpen, closeEditAccountModal, errors, handleSubmit, register, control } = useEditAccountModalController()
 
     return (
-        <Modal title="Nova Conta" open={isNewAccountModalOpen} onClose={closeNewAccountModal}>
+        <Modal title="Editar Conta" open={isEditAccountModalOpen} onClose={closeEditAccountModal}>
             <form onSubmit={handleSubmit}>
                 <div >
                     <span className="text-gray-600 tracking-[-0.5px] text-xs">Saldo inicial</span>
@@ -65,7 +65,7 @@ export function NewAccountModal() {
                     />
 
                     <Button type="submit" className="w-full mt-6">
-                        Criar
+                        Editar
                     </Button>
                 </div>
             </form>

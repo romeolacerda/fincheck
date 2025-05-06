@@ -8,6 +8,8 @@ import { DropdownMenu } from "./DropDownMenu";
 interface ColorsDropdownInputProps {
     error?: string
     className?: string
+    value?: string
+    onChange?(value: string): void
 }
 
 type Color = {
@@ -15,12 +17,19 @@ type Color = {
     bg: string
 }
 
-export function ColorsDropdownInput({ className, error }: ColorsDropdownInputProps) {
+export function ColorsDropdownInput({ className, error, onChange, value }: ColorsDropdownInputProps) {
 
-    const [selectedColor, setSelectedColor] = useState<null | Color>(null)
+    const [selectedColor, setSelectedColor] = useState<null | Color>(() => {
+        if(!value){
+            return null
+        }
+
+        return COLORS.find(c => c.color === value) ?? null
+    })
 
     function handleSelect(color: Color) {
         setSelectedColor(color)
+        onChange?.(color.color)
     }
 
     return (
