@@ -14,7 +14,7 @@ export class TransactionsService {
     private readonly validateBankAccountOwnershipService: ValidateBankAccountOwnershipService,
     private readonly validateCategoryOwnershipService: ValidateCategoryOwnershipService,
     private readonly validateTransactionOwnershipService: ValidateTransactionOwnershipService,
-  ) {}
+  ) { }
 
   async create(userId: string, createTransactionDto: CreateTransactionDto) {
     const { bankAccountId, categoryId, date, name, type, value } =
@@ -35,17 +35,26 @@ export class TransactionsService {
     });
   }
 
-  findAllByUserId(userId: string, filters: { month: number, year: number, bankAccountId?: string, type?: TransactionType}) {
+  findAllByUserId(userId: string, filters: { month: number, year: number, bankAccountId?: string, type?: TransactionType }) {
     return this.transactionsRepo.findMany({
-      where: { 
+      where: {
         userId,
         bankAccountId: filters.bankAccountId,
         type: filters.type,
         date: {
           gte: new Date(Date.UTC(filters?.year, filters?.month)),
-          lt: new Date(Date.UTC(filters?.year, filters?.month + 1 ))
+          lt: new Date(Date.UTC(filters?.year, filters?.month + 1))
         }
-       },
+      },
+      include: {
+        category: {
+          select: {
+            id: true,
+            name: true,
+            icon: true
+          }
+        }
+      }
     });
   }
 
@@ -102,18 +111,18 @@ export class TransactionsService {
   }) {
     await Promise.all([
       transactionId &&
-        this.validateTransactionOwnershipService.validate(
-          userId,
-          transactionId,
-        ),
+      this.validateTransactionOwnershipService.validate(
+        userId,
+        transactionId,
+      ),
 
       bankAccountId &&
-        this.validateBankAccountOwnershipService.validate(
-          userId,
-          bankAccountId,
-        ),
+      this.validateBankAccountOwnershipService.validate(
+        userId,
+        bankAccountId,
+      ),
       categoryId &&
-        this.validateCategoryOwnershipService.validate(userId, categoryId),
+      this.validateCategoryOwnershipService.validate(userId, categoryId),
     ]);
   }
 }
