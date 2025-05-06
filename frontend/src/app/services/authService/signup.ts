@@ -1,17 +1,20 @@
-import { httpClient } from "../httpClient"
+import { httpClient } from '../httpClient';
 
 export interface SignupParams {
-    name: string
-    email: string
-    password: string
+  name: string;
+  email: string;
+  password: string;
 }
 
 interface SignupResponse {
-    accessToken : string
+  accessToken: string;
 }
 
 export async function signup(params: SignupParams) {
-    const { data } = await httpClient.post<SignupResponse>('/auth/signup', params)
+  const { data } = await httpClient.post<SignupResponse>(
+    '/auth/signup',
+    params,
+  );
 
-    return data
+  return data;
 }
