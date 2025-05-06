@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { z } from "zod";
 import { bankAccountService } from "../../../../../app/services/bankAccountService";
-import { BankAccountParams } from "../../../../../app/services/bankAccountService/create";
+import { CreateBankAccountParams } from "../../../../../app/services/bankAccountService/create";
 import currencyStringToNumber from "../../../../../app/utils/currencyStringToNumber";
 import { useDashboard } from "../../DashboardContext/useDashboard";
 
@@ -27,12 +27,12 @@ export default function useNewAccountModalController() {
         reset,
         formState: { errors },
     } = useForm<FormData>({
-        resolver: zodResolver(schema),
+        resolver: zodResolver(schema)
     });
 
     const queryClient = useQueryClient();
     const { isPending, mutateAsync } = useMutation(
-        { mutationFn: async(data: BankAccountParams) =>  { return bankAccountService.create(data)} }
+        { mutationFn: async (data: CreateBankAccountParams) => { return bankAccountService.create(data) } }
     )
 
     const handleSubmit = hookFormHandleSubmit(async (data) => {
@@ -46,7 +46,7 @@ export default function useNewAccountModalController() {
                 initialBalance: currencyStringToNumber(initialBalance),
             });
             toast.success("Conta cadastrada com sucesso!");
-            queryClient.invalidateQueries({queryKey : ["bank-accounts"]});
+            queryClient.invalidateQueries({ queryKey: ["bank-accounts"] });
             closeNewAccountModal();
             reset();
         } catch {
