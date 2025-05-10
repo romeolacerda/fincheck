@@ -20,7 +20,6 @@
 - **Prisma ORM** for database access
 - **PostgreSQL** as the database
 - **JWT Authentication**
-- **Class Validator** for request validation
 - **Docker** for containerization
 - **Jest** for testing
 
