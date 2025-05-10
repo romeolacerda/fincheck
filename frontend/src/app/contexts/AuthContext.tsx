@@ -3,12 +3,14 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { LaunchScreen } from '../../components/LaunchScreen';
 import { localStorageKeys } from '../config/LocalStorageKeys';
+import { User } from '../entities/User';
 import { usersService } from '../services/usersService';
 
 interface AuthContextValue {
   signedIn: boolean;
   signin(accessToken: string): void;
   signout(): void;
+  user: User | undefined;
 }
 
 export const AuthContext = createContext<AuthContextValue>(
@@ -26,7 +28,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const queryClient = useQueryClient();
 
-  const { isError, isFetching, isSuccess } = useQuery({
+  const { isError, isFetching, isSuccess, data } = useQuery({
     queryKey: ['users', 'me'],
     queryFn: async () => usersService.me(),
     enabled: signedIn,
@@ -53,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ signedIn: isSuccess && signedIn, signin, signout }}
+      value={{ signedIn: isSuccess && signedIn, signin, signout, user: data }}
     >
       <LaunchScreen isLoading={isFetching} />
       {!isFetching && children}

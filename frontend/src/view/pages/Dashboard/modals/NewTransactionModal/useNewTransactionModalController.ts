@@ -67,6 +67,7 @@ export function useNewTransactionModalController() {
           : 'Receita cadastrada com sucesso!',
       );
       queryClient.invalidateQueries({ queryKey: ['transactions'] });
+      queryClient.invalidateQueries({ queryKey: ['bank-accounts'] });
       closeNewTransactionModal();
       reset();
     } catch {
